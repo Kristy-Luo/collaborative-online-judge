@@ -14,9 +14,11 @@ export class ProblemListComponent implements OnInit {
 
   ngOnInit() {
     this.problems = this.dataService.getProblems();
+    /*
     for (let problem of this.problems) {
       console.log(problem);
     }
+    */
   }
 
 }
