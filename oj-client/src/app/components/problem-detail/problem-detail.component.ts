@@ -3,9 +3,6 @@ import { Problem } from './../../models/problem.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-// import { identifierModuleUrl } from '@angular/compiler';
-
-
 @Component({
   selector: 'app-problem-detail',
   templateUrl: './problem-detail.component.html',

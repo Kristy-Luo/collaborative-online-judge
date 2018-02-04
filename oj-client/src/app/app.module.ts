@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router'; 
-
+import { appRoutes } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { ProblemListComponent } from './components/problem-list/problem-list.component';
@@ -20,12 +21,8 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      {path: '', pathMatch: 'full', redirectTo: 'problems'},
-      {path: 'problems/:id', component: ProblemDetailComponent},
-      {path: 'problems', component: ProblemListComponent},
-      {path: '**', redirectTo: 'problems'}
-    ])
+    FormsModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
