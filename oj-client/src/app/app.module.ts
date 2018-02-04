@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule} from '@angular/router'; 
 
 
 import { AppComponent } from './app.component';
@@ -18,7 +19,13 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
     NewProblemComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([
+      {path: '', pathMatch: 'full', redirectTo: 'problems'},
+      {path: 'problems/:id', component: ProblemDetailComponent},
+      {path: 'problems', component: ProblemListComponent},
+      {path: '**', redirectTo: 'problems'}
+    ])
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
