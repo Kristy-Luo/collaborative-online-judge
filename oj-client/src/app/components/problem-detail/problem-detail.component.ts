@@ -17,7 +17,9 @@ export class ProblemDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       // console.log(params);
       // console.log(params.get('id')); 
-      this.problem = this.dataService.getProblemByID(+params.get('id'));
+      // this.problem = this.dataService.getProblemByID(+params.get('id')); // with local data 
+      this.dataService.getProblemByID(+params.get('id'))
+        .subscribe(problem => this.problem = problem);
     });
     
   }

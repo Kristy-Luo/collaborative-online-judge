@@ -2,9 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router'; 
-import { appRoutes } from './app.routes';
+import { HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { appRoutes } from './app.routes';
 import { ProblemListComponent } from './components/problem-list/problem-list.component';
 import { DataService } from './services/data.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,7 +23,8 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

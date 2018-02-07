@@ -7,5 +7,6 @@ const mongoose = require('mongoose');
 mongoose.connect("mongodb://user:user@ds123698.mlab.com:23698/ojdb");
 
 // application-level middleware
+console.log("POST request!");
 app.use('/api/v1', restRouter);
 app.listen(3000, () => console.log("server listening on port 3000"));
