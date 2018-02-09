@@ -17,10 +17,8 @@ router.get('/problems/:id', (req, res) => {
     problemService.getProblemByID(+id).then(problem => res.json(problem));
 });
 
-console.log("request received!");
 // Handles POST request to the /problems path 
 router.post('/problems', jsonParser, (req, res) => {
-    console.log("POST request received!");
     problemService.addProblem(req.body)
     .then(problem => res.json(problem), 
     err => res.status(400).send('Problem Aready Exists!'));

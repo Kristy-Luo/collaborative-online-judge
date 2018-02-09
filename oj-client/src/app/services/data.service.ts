@@ -13,7 +13,7 @@ const httpOptions = {
 
 @Injectable()
 export class DataService {
-  private problemsUrl = 'http://localhost:3000/api/v1/problems';  // URL to web api
+  private problemsUrl = 'api/v1/problems';  // URL to web api
 
   constructor(private http: HttpClient) { }
   
