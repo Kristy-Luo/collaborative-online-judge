@@ -13,15 +13,11 @@ export class ProblemListComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    // this.problems = this.dataService.getProblems(); // work with local data 
-    /*
-    for (let problem of this.problems) {
-      console.log(problem);
-    }
-    */
-    
+    this.getProblems(); 
+  }
+
+  getProblems(): void {
     this.dataService.getProblems()
       .subscribe(problems => this.problems = problems);
   }
-
 }

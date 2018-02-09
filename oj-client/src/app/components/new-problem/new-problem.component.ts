@@ -24,10 +24,9 @@ export class NewProblemComponent implements OnInit {
   ngOnInit() {
   }
   
-  // execute once the submit button is clicked 
+  // Execute once the submit button is clicked 
   addProblem() {
     this.dataService.addProblem(this.newProblem);
-    // prevent the problem just added from being overwritten  
-    this.newProblem = Object.assign({}, DEFAULT_PROBLEM); 
-  }
+    this.newProblem = Object.assign({}, DEFAULT_PROBLEM);
+  } 
 }
