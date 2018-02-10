@@ -10,7 +10,8 @@ import { ProblemListComponent } from './components/problem-list/problem-list.com
 import { DataService } from './services/data.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProblemDetailComponent } from './components/problem-detail/problem-detail.component';
-import { NewProblemComponent } from './components/new-problem/new-problem.component'; 
+import { NewProblemComponent } from './components/new-problem/new-problem.component';
+import { EditorComponent } from './components/editor/editor.component'; 
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
     ProblemListComponent,
     NavbarComponent,
     ProblemDetailComponent,
-    NewProblemComponent
+    NewProblemComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,

@@ -97,6 +97,7 @@ var data_service_1 = __webpack_require__("../../../../../src/app/services/data.s
 var navbar_component_1 = __webpack_require__("../../../../../src/app/components/navbar/navbar.component.ts");
 var problem_detail_component_1 = __webpack_require__("../../../../../src/app/components/problem-detail/problem-detail.component.ts");
 var new_problem_component_1 = __webpack_require__("../../../../../src/app/components/new-problem/new-problem.component.ts");
+var editor_component_1 = __webpack_require__("../../../../../src/app/components/editor/editor.component.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -107,7 +108,8 @@ var AppModule = /** @class */ (function () {
                 problem_list_component_1.ProblemListComponent,
                 navbar_component_1.NavbarComponent,
                 problem_detail_component_1.ProblemDetailComponent,
-                new_problem_component_1.NewProblemComponent
+                new_problem_component_1.NewProblemComponent,
+                editor_component_1.EditorComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -140,6 +142,75 @@ exports.appRoutes = [
     { path: 'problems', component: problem_list_component_1.ProblemListComponent },
     { path: '**', redirectTo: 'problems' }
 ];
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/editor/editor.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "@media screen {\n    #editor {\n        height: 600px;\n    } \n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/editor/editor.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"editor\"></div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/editor/editor.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var EditorComponent = /** @class */ (function () {
+    function EditorComponent() {
+        this.defaultContent = {
+            'Java': "public class Example {\n      public static void main(String[] args) {\n        // Type your Java code here.\n      }\n    }",
+            'Python': "class Solution:\n      def example():\n        # write your python code here.\n    "
+        };
+    }
+    EditorComponent.prototype.ngOnInit = function () {
+        this.editor = ace.edit("editor");
+        this.editor.setTheme("ace/theme/eclipse");
+        this.editor.session.setMode("ace/mode/java");
+        this.editor.setValue(this.defaultContent['Java']);
+    };
+    EditorComponent = __decorate([
+        core_1.Component({
+            selector: 'app-editor',
+            template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], EditorComponent);
+    return EditorComponent;
+}());
+exports.EditorComponent = EditorComponent;
 
 
 /***/ }),
@@ -302,7 +373,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/problem-detail/problem-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"problem\">\n    <!--<div class=\"col-sm-12 col-md-4\">-->\n      <h3>\n        {{problem.id}}. {{problem.name}}\n      </h3>\n      <div class=\"panel panel-default\">\n        <div class=\"panel-heading\">\n            <span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Description\n        </div>\n        <div class=\"panel-body\">\n          <p>\n            {{problem.description}}\n          </p>\n        </div>\n      </div>\n    <!--</div>-->\n</div>\n\n "
+module.exports = "<div class=\"container\" *ngIf=\"problem\">\n    <!--<div class=\"col-sm-12 col-md-4\">-->\n      <h3>\n        {{problem.id}}. {{problem.name}}\n      </h3>\n      <div class=\"panel panel-default\">\n        <div class=\"panel-heading\">\n            <span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Description\n        </div>\n        <div class=\"panel-body\">\n          <p>\n            {{problem.description}}\n          </p>\n        </div>\n      </div>\n    <!--</div>-->\n    <div>\n      <app-editor></app-editor>\n    </div>\n</div>\n\n "
 
 /***/ }),
 
