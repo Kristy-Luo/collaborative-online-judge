@@ -167,7 +167,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section>\n    <header class=\"editor-header\">\n      <select class=\"form-control pull-left lang-select\" name=\"language\"\n       [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n       <option *ngFor=\"let language of languages\" [value]=\"language\">\n         {{language}}\n       </option>\n      </select>\n      <!--reset button -->\n      <!-- Button trigger modal -->\n      <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">\n        Reset\n      </button>\n  \n      <!-- Modal -->\n      <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n        <div class=\"modal-dialog\" role=\"document\">\n          <div class=\"modal-content\">\n            <div class=\"modal-header\">\n              <h5 class=\"modal-title\" id=\"exampleModalLabel\">Are you sure</h5>\n              <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                <span aria-hidden=\"true\">&times;</span>\n              </button>\n            </div>\n            <div class=\"modal-body\">\n              You will lose current code in the editor, are you sure?\n            </div>\n            <div class=\"modal-footer\">\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cancel</button>\n              <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\"\n              (click)=\"resetEditor()\">Reset</button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </header>\n    <div class=\"row\">\n      <div id=\"editor\">\n      </div>\n    </div><!-- This is the body -->\n    <footer class=\"editor-footer\">\n        <button type=\"button\" class=\"btn btn-success pull-right\" \n        (click)=\"submit()\">Submit Solution</button>\n    </footer>\n  </section>"
+module.exports = "<section>\n    <header class=\"editor-header\">\n      <select class=\"form-control pull-left lang-select\" name=\"language\"\n       [(ngModel)]=\"language\" (change)=\"resetEditor()\">\n       <option *ngFor=\"let language of languages\" [value]=\"language\">\n         {{language}}\n       </option>\n      </select>\n      <!--reset button -->\n      <!-- Button trigger modal -->\n      <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">\n        Reset\n      </button>\n  \n      <!-- Modal -->\n      <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n        <div class=\"modal-dialog\" role=\"document\">\n          <div class=\"modal-content\">\n            <div class=\"modal-header\">\n              <h5 class=\"modal-title\" id=\"exampleModalLabel\">Are you sure</h5>\n              <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                <span aria-hidden=\"true\">&times;</span>\n              </button>\n            </div>\n            <div class=\"modal-body\">\n              You will lose current code in the editor, are you sure?\n            </div>\n            <div class=\"modal-footer\">\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cancel</button>\n              <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\"\n              (click)=\"resetEditor()\">Reset</button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </header>\n    <div class=\"row\">\n      <div id=\"editor\">\n      </div>\n    </div><!-- This is the body -->\n    <footer class=\"editor-footer\">\n        <button type=\"button\" class=\"btn btn-success pull-right\" \n        (click)=\"submit()\">Submit Solution</button>\n    </footer>\n  </section>"
 
 /***/ }),
 
@@ -189,6 +189,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var EditorComponent = /** @class */ (function () {
     function EditorComponent() {
+        this.languages = ['Java', 'Python'];
+        this.language = 'Java'; // default language 
         this.defaultContent = {
             'Java': "public class Example {\n      public static void main(String[] args) {\n        // Type your Java code here.\n      }\n    }",
             'Python': "class Solution:\n      def example():\n        # write your python code here.\n    "
@@ -197,8 +199,24 @@ var EditorComponent = /** @class */ (function () {
     EditorComponent.prototype.ngOnInit = function () {
         this.editor = ace.edit("editor");
         this.editor.setTheme("ace/theme/eclipse");
-        this.editor.session.setMode("ace/mode/java");
-        this.editor.setValue(this.defaultContent['Java']);
+        this.resetEditor();
+    };
+    // Reset editor: called on init and responds to the Reset button's click event 
+    EditorComponent.prototype.resetEditor = function () {
+        this.editor.session.setMode("ace/mode/" + this.language.toLowerCase());
+        this.editor.setValue(this.defaultContent[this.language]);
+    };
+    /*
+    setLanguage(language: string): void {
+      console.log(this.language);
+      this.resetEditor();
+    }
+    */
+    // Submit: execute once submit button is clicked 
+    EditorComponent.prototype.submit = function () {
+        // get the current session's content
+        var user_code = this.editor.getValue();
+        console.log(user_code);
     };
     EditorComponent = __decorate([
         core_1.Component({

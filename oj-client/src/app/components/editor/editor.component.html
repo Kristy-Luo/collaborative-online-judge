@@ -1,7 +1,7 @@
 <section>
     <header class="editor-header">
       <select class="form-control pull-left lang-select" name="language"
-       [(ngModel)]="language" (change)="setLanguage(language)">
+       [(ngModel)]="language" (change)="resetEditor()">
        <option *ngFor="let language of languages" [value]="language">
          {{language}}
        </option>
