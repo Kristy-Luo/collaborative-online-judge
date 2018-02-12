@@ -154,7 +154,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@media screen {\n    #editor {\n        height: 600px;\n    } \n}", ""]);
+exports.push([module.i, "@media screen {\n    #editor {\n        height: 600px;\n    }\n    .lang-select {\n        width: 100px;\n        margin-right: 10px;\n    }\n    header .btn {\n        margin: 0 5px;\n    }\n    footer .btn {\n        margin: 0 5px;\n    }\n    .editor-footer, .editor-header {\n        margin: 10px 0;\n    }\n    .cursor {\n        /*position:absolute;*/\n        background: rgba(0, 250, 0, 0.5);\n        z-index: 40;\n        width: 2px !important;\n    }\n}", ""]);
 
 // exports
 
@@ -167,7 +167,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"editor\"></div>\n"
+module.exports = "<section>\n    <header class=\"editor-header\">\n      <select class=\"form-control pull-left lang-select\" name=\"language\"\n       [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n       <option *ngFor=\"let language of languages\" [value]=\"language\">\n         {{language}}\n       </option>\n      </select>\n      <!--reset button -->\n      <!-- Button trigger modal -->\n      <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">\n        Reset\n      </button>\n  \n      <!-- Modal -->\n      <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n        <div class=\"modal-dialog\" role=\"document\">\n          <div class=\"modal-content\">\n            <div class=\"modal-header\">\n              <h5 class=\"modal-title\" id=\"exampleModalLabel\">Are you sure</h5>\n              <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                <span aria-hidden=\"true\">&times;</span>\n              </button>\n            </div>\n            <div class=\"modal-body\">\n              You will lose current code in the editor, are you sure?\n            </div>\n            <div class=\"modal-footer\">\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cancel</button>\n              <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\"\n              (click)=\"resetEditor()\">Reset</button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </header>\n    <div class=\"row\">\n      <div id=\"editor\">\n      </div>\n    </div><!-- This is the body -->\n    <footer class=\"editor-footer\">\n        <button type=\"button\" class=\"btn btn-success pull-right\" \n        (click)=\"submit()\">Submit Solution</button>\n    </footer>\n  </section>"
 
 /***/ }),
 
@@ -236,7 +236,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n    <div class=\"container\">\n        <nav class=\"navbar fixed-top navbar-light\" style=\"background-color: #e3f2fd;\">\n            <div class=\"navbar-header\">\n                <a class=\"navbar-brand\" routerLink=\"#\"><span class=\"glyphicon glyphicon-home\" aria-hidden=\"true\"></span>Collaborative OJ</a>\n            </div>\n        </nav>\n    </div>\n</header>"
+module.exports = "<header>\n    <div class=\"container-fluid\">\n        <nav class=\"navbar fixed-top navbar-light\" style=\"background-color: #e3f2fd;\">\n            <div class=\"navbar-header\">\n                <a class=\"navbar-brand\" routerLink=\"#\"><span class=\"glyphicon glyphicon-home\" aria-hidden=\"true\"></span>Collaborative OJ</a>\n            </div>\n        </nav>\n    </div>\n</header>"
 
 /***/ }),
 
@@ -373,7 +373,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/problem-detail/problem-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"problem\">\n    <!--<div class=\"col-sm-12 col-md-4\">-->\n      <h3>\n        {{problem.id}}. {{problem.name}}\n      </h3>\n      <div class=\"panel panel-default\">\n        <div class=\"panel-heading\">\n            <span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Description\n        </div>\n        <div class=\"panel-body\">\n          <p>\n            {{problem.description}}\n          </p>\n        </div>\n      </div>\n    <!--</div>-->\n    <div>\n      <app-editor></app-editor>\n    </div>\n</div>\n\n "
+module.exports = "<div class=\"container-fluid\" *ngIf=\"problem\">\n    <div class=\"col-sm-12 col-md-6\">\n      <h3>\n        {{problem.id}}. {{problem.name}}\n      </h3>\n      <div class=\"panel panel-default\">\n        <div class=\"panel-heading\">\n            <span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Description\n        </div>\n        <div class=\"panel-body\">\n          <p>\n            {{problem.description}}\n          </p>\n        </div>\n      </div>\n    </div>\n    <div class=\"hidden-xs col-sm-12 col-md-6\">\n      <app-editor></app-editor>\n    </div>\n</div>\n\n "
 
 /***/ }),
 
