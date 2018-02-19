@@ -29,4 +29,9 @@ export class CollaborationService {
   change(delta: string): void {
     this.socket.emit('change', delta);
   }
+
+  // Ask server to send back all cached instructions of the collaboration session 
+  restoreBuffer(): void {
+    this.socket.emit('restoreBuffer');
+  }
 }

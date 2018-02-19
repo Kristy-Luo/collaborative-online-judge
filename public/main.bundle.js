@@ -210,6 +210,8 @@ var EditorComponent = /** @class */ (function () {
             _this.problemID = params.get('id');
             console.log("problemID: " + _this.problemID);
             _this.initEditor();
+            // Asks server to send back all the cached instructions
+            _this.collaborationService.restoreBuffer();
         });
     };
     // editor initialization
@@ -572,6 +574,10 @@ var CollaborationService = /** @class */ (function () {
     // Emit a change event whenever the editor detects an input change
     CollaborationService.prototype.change = function (delta) {
         this.socket.emit('change', delta);
+    };
+    // Ask server to send back all cached instructions of the collaboration session 
+    CollaborationService.prototype.restoreBuffer = function () {
+        this.socket.emit('restoreBuffer');
     };
     CollaborationService = __decorate([
         core_1.Injectable(),

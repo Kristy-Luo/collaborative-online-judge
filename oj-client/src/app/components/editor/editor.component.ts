@@ -34,6 +34,8 @@ export class EditorComponent implements OnInit {
       this.problemID = params.get('id'); 
       console.log("problemID: " + this.problemID);
       this.initEditor(); 
+      // Asks server to send back all the cached instructions
+      this.collaborationService.restoreBuffer();
     });
   }
   
