@@ -1,9 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CollaborationService } from './../../services/collaboration.service';
-import { ActivatedRoute, Params } from '@angular/router';
 
 declare var ace: any; 
-
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -13,7 +12,7 @@ export class EditorComponent implements OnInit {
   editor: any; 
   languages: string[] = ['Java', 'Python']; 
   language: string = 'Java'; // default language 
-  sessionId: string;
+  problemID: string; 
 
   defaultContent = {
     'Java': `public class Example {
@@ -27,51 +26,51 @@ export class EditorComponent implements OnInit {
     `
   };
 
-  constructor(private collaborationService: CollaborationService, private route: ActivatedRoute) { }
+  constructor(private collaborationService: CollaborationService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // use problem id as session id
-    this.route.params
-      .subscribe(params => {
-        this.sessionId = params['id'];
-        this.initEditor();
-      });
-    }
-
+    this.route.paramMap.subscribe(params => {
+      this.problemID = params.get('id'); 
+      console.log("problemID: " + this.problemID);
+      this.initEditor(); 
+    });
+  }
+  
+  // editor initialization
   initEditor(): void {
     this.editor = ace.edit("editor");
     this.editor.setTheme("ace/theme/eclipse");
     this.resetEditor(); 
 
-    // setup collaboration socket
-    this.collaborationService.init(this.editor, this.sessionId);
-    this.editor.lastAppliedChange = null;
-    
-    // registrer change callback
-    this.editor.on("change", (e) => {
-      console.log('editor changes: ' + JSON.stringify(e));
-      if (this.editor.lastAppliedChange != e) {
-        this.collaborationService.change(JSON.stringify(e));
+    // setup socket.io for collaboration 
+    this.collaborationService.init(this.problemID, this.editor); 
+    this.editor.lastAppliedChange = null; 
+
+    // listen for document changes
+    this.editor.on("change", (delta) => {
+      if (delta != this.editor.lastAppliedChange) {
+        // call collaboration service to emit a change event 
+        this.collaborationService.change(JSON.stringify(delta)); 
       }
-    })
- 
+    }); 
   }
 
-  // Reset editor 
+  // reset editor: reset the programming Language and its default content
   resetEditor(): void {
+    this.editor.session.setMode("ace/mode/" + this.language.toLowerCase());
     this.editor.setValue(this.defaultContent[this.language]);
-    this.editor.getSession().setMode("ace/mode/" + this.language.toLowerCase());
   }
-
-  // Set language
+  
+  // set language 
   setLanguage(): void {
-    this.resetEditor();
+    this.resetEditor(); 
   }
 
-  // Submit: execute once submit button is clicked 
+  // submit code 
   submit(): void {
-    // get the current session's content
-    let user_code = this.editor.getValue();
+    // get content of the current session
+    let user_code = this.editor.getValue(); 
     console.log(user_code);
   }
 }

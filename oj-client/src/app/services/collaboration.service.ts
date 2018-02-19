@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 
-declare var io: any;
+// io is alread imported in .angular.cli.json
+declare var io: any; 
 
 @Injectable()
 export class CollaborationService {
-  collaborationSocket: any;
+  socket: any; 
 
   constructor() { }
 
-  init(editor: any, sessionId: string): void {
-    //this.socket = io(); // connect to the host that serves the page by default 
-    this.collaborationSocket = io(window.location.origin, {query: 'sessionId=' + sessionId});
-
-    this.collaborationSocket.on("change", (delta: string) => {
-      console.log('collabration: editor changes by ' + delta);
-      delta = JSON.parse(delta);
-      editor.lastAppliedChange = delta;
-      editor.getSession().getDocument().applyDeltas([delta]);
-    })
+  init(problemID: string, editor: any) { 
+    // Connect to the host (http://localhost:3000) and send the problemID 
+    this.socket = io({query: {
+      problemID: problemID
+    }}); 
+     
+    // Listen for change events
+    this.socket.on('change', delta => {
+      delta = JSON.parse(delta); // string to JavaScript object 
+      console.log("delta" + delta);
+      // Avoid triggering another change event based on this change 
+      editor.lastAppliedChange = delta; 
+      editor.getSession().getDocument().applyDeltas([delta]); // apply change 
+    });
   }
-
-  // emit event to make changes and inform server and other collaborators
+  
+  // Emit a change event whenever the editor detects an input change
   change(delta: string): void {
-    this.collaborationSocket.emit("change", delta);
+    this.socket.emit('change', delta);
   }
 }
